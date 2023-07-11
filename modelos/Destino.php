@@ -1,5 +1,5 @@
 <?php
-    include_once("Conn.php");
+       include_once("../clase/Conn.php");
 
 
     class Destino{
@@ -13,7 +13,7 @@
         
         public function mostrar()
         {
-        $conn = new Conexion();
+        $conn = new Conn();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Destino_Turistico";
         $resultado = $conexion->query($sql);

@@ -1,48 +1,25 @@
-
 <?php
+include_once($_SERVER["DOCUMENT_ROOT"] . "/clase/Conn.php");
 
-require_once "vistas/login.php";
+function LoginUsuario($dni,$password){
+    $conn = new Conn();
+    $conexion = $conn->conectar();
+    $query = $conexion->prepare("SELECT IdUsuario, Dni, Apellidos, Nombres FROM Usuario WHERE Dni=:dni AND Password=:pass");
+    $query->bindParam(':dni', $dni);
+    $query->bindParam(':pass', $password);
+    $query->execute();
+    $result = $query->fetch();
+    return $result;
+}
 
-class ValidarLogin{
-    public function login($Dni, $Password){
-        $login = new Usuario();
-        $login->setDni($Dni);
-        $resultado = $login->buscarDni();
-
-        $contador = 0;
-        $contraseñadb = null;
-        $idUsuario = null;
-        foreach($resultado as $login){
-            $contador++;
-            if($contador>0){
-                
-                    $hashdb = $login["Password"];
-                    $idUsuario = $login["IdUsuario"];
-
-                }
-            }
-        
-        if($contador!=0){
-            if(!password_verify($Password, $hashdb)){
-                return 0;
-            }else{
-                session_start();
-                $_SESSION["IdUsuario"] = $login;
-                return 1;
-
-            }
-        }  
-        return $contador;
-    }
-        /*public function guardar (string $nombre, string $email, string $password){
-            $usuario = new Usuario();
-            $usuario->setNombre($nombre);
-            $usuario->setEmail($email);
-            $usuario->setPassword(password_hash($password, PASSWORD_BCRYPT));
-
-            return $usuario->guardar();
-
-
-
-        }*/
-    }
+function LoginResponsable($dni,$password){
+    $conn = new Conn();
+    $conexion = $conn->conectar();
+    $query = $conexion->prepare("SELECT IdResponsable, Dni, Apellidos, Nombres FROM Responsable WHERE Dni=:dni AND Password=:pass");
+    $query->bindParam(':dni', $dni);
+    $query->bindParam(':pass', $password);
+    $query->execute();
+    $result = $query->fetch();
+    return $result;
+}
+?>
