@@ -1,6 +1,6 @@
 <?php
        include_once("../clase/Conn.php");
-    class Correo{
+    class correo{
 
         public function mostrarRecibidos(int $id) :PDOStatement
         {

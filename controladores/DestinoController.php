@@ -1,5 +1,5 @@
 <?php
-      include_once($_SERVER["DOCUMENT_ROOT"] . "/modelos/Destino.php");
+      include_once($_SERVER["DOCUMENT_ROOT"] . "/modelos/destino.php");
     class DestinoController{
 
         public function mostrar()

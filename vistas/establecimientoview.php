@@ -15,28 +15,28 @@
             echo "<div class='alert alert-danger mt-2' role='alert'>No tiene acceso a este modulo</div>";
             exit();
         }
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/EstablecimientoController.php");
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/DestinoController.php");
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/ResponsableController.php");
-        $establecimientocontroller = new EstablecimientoController();
-        $destinocontroller = new DestinoController();
-        $responsablecontroller = new ResponsableController();
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/establecimientocontroller.php");
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/destinocontroller.php");
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/responsablecontroller.php");
+        $establecimientocontrolador = new establecimientocontroller();
+        $destinocontrolador = new destinocontroller();
+        $responsablecontrolador = new responsablecontroller();
         if($_SERVER["REQUEST_METHOD"] == "POST") {       
             
             if($_POST['idestablecimientoval']>0){
-                $establecimientocontroller -> asignar($_POST['idestablecimientoval'],$_POST['idresponsable']);
+                $establecimientocontrolador -> asignar($_POST['idestablecimientoval'],$_POST['idresponsable']);
                 $_POST = array();
                 header("location: establecimientoview.php");
             }elseif($_POST['idresponsableup']>0){
-                $establecimientocontroller -> asignar($_POST['idestablecimientoup'],$_POST['idresponsableup']);
+                $establecimientocontrolador -> asignar($_POST['idestablecimientoup'],$_POST['idresponsableup']);
                 $_POST = array();
                 header("location: establecimientoview.php");
             }elseif($_POST['idup']>0){
-                $establecimientocontroller -> editar($_POST['idup'],strtoupper($_POST['nombreestaup']),strtoupper($_POST['direccionup']),$_POST['iddestinoup']);
+                $establecimientocontrolador -> editar($_POST['idup'],strtoupper($_POST['nombreestaup']),strtoupper($_POST['direccionup']),$_POST['iddestinoup']);
                 $_POST = array();
                 header("location: establecimientoview.php");
             }else{
-                $establecimientocontroller -> guardar(strtoupper($_POST['nombre']),strtoupper($_POST['direccion']),$_POST['iddestino'],$_SESSION['id']);
+                $establecimientocontrolador -> guardar(strtoupper($_POST['nombre']),strtoupper($_POST['direccion']),$_POST['iddestino'],$_SESSION['id']);
                 $_POST = array();
                 header("location: establecimientoview.php");
             }
@@ -71,7 +71,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $establecimientos = $establecimientocontroller -> mostrar();
+                    $establecimientos = $establecimientocontrolador -> mostrar();
                     foreach ($establecimientos as $establecimiento) {
                     echo "<tr><td class='text-center'>".$establecimiento["IdEstablecimiento"]."</td><td class='text-center'>".$establecimiento["NombreEstablecimiento"]."</td><td class='text-center'>".$establecimiento["Direccion"]."</td>
                     <td class='text-center'>".$establecimiento["NombreDestino"]."</td><td class='text-center'>".$establecimiento["ApellidosUsuario"]." ".$establecimiento["NombresUsuario"]."</td><td class='text-center'>".($establecimiento["IdResponsable"]?$establecimiento["ApellidosResponsable"]." ".$establecimiento["NombresResponsable"]:"<span class='badge text-bg-danger'>NO ASIGNADO</span>")."</td>
@@ -108,7 +108,7 @@
                     <select name="iddestino" id="iddestino" required class="form-select" aria-label="iddestino">
                         <option value="">SELECCIONE DESTINO TURÍSTICO</option>
                         <?php
-                        $destinos = $destinocontroller -> mostrar();
+                        $destinos = $destinocontrolador -> mostrar();
                         foreach ($destinos as $destino) {
                             echo "<option value='".$destino['IdDestinoTuristico']."' class='fw-bold'>".$destino['NombreDestino']." - ".$destino['Departamento']."</option>";
                         }
@@ -146,7 +146,7 @@
                     <select name="idresponsable" id="idresponsable" required class="form-select" aria-label="idresponsable">
                         <option value="">SELECCIONE RESPONSABLE</option>
                         <?php
-                        $responsables = $responsablecontroller -> mostrar();
+                        $responsables = $responsablecontrolador -> mostrar();
                         foreach ($responsables as $responsable) {
                             echo "<option value='".$responsable['IdResponsable']."' class='fw-bold'>".$responsable['Apellidos']." ".$responsable['Nombres']."</option>";
                         }
@@ -187,7 +187,7 @@
                     <select name="idresponsableup" id="idresponsableup" required class="form-select" aria-label="idresponsableup">
                         <option value="">SELECCIONE RESPONSABLE</option>
                         <?php
-                        $responsables = $responsablecontroller -> mostrar();
+                        $responsables = $responsablecontrolador -> mostrar();
                         foreach ($responsables as $responsable) {
                             echo "<option value='".$responsable['IdResponsable']."' class='fw-bold'>".$responsable['Apellidos']." ".$responsable['Nombres']."</option>";
                         }
@@ -235,7 +235,7 @@
                     <select name="iddestinoup" id="iddestinoup" class="form-select" aria-label="iddestinoup">
                         <option value="0">NO ACTUALIZAR</option>
                         <?php
-                        $destinos = $destinocontroller -> mostrar();
+                        $destinos = $destinocontrolador -> mostrar();
                         foreach ($destinos as $destino) {
                             echo "<option value='".$destino['IdDestinoTuristico']."' class='fw-bold'>".$destino['NombreDestino']." - ".$destino['Departamento']."</option>";
                         }

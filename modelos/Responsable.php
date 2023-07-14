@@ -2,7 +2,7 @@
 
 include_once("../clase/Conn.php");
 
-    class Responsable{
+    class responsable{
 
         private $idresponsableTuristico;
         private $nombreresponsable;

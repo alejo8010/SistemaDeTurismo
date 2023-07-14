@@ -2,7 +2,7 @@
        include_once("../clase/Conn.php");
 
 
-    class Destino{
+    class destino{
         private $idDestinoTuristico;
         private $nombreDestino;
         private $distrito;

@@ -1,11 +1,16 @@
 <?php
        include_once("../clase/Conn.php");
-    class Capacitacion{
+
+
+    class capacitacion{
+
         private $idDestinoTuristico;
         private $nombreDestino;
         private $distrito;
         private $provincia;
         private $departamento;
+
+        
         public function mostrar(int $id) :PDOStatement
         {
         $conn = new Conn();

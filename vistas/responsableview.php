@@ -15,15 +15,15 @@
             echo "<div class='alert alert-danger mt-2' role='alert'>No tiene acceso a este modulo</div>";
             exit();
         }
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/ResponsableController.php");
-        $responsablecontroller = new ResponsableController();
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/responsablecontroller.php");
+        $responsablecontrolador = new responsablecontroller();
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             if($_POST['idupdate'] > 0){
-                $responsablecontroller -> actualizar($_POST['idupdate'],$_POST['dniup'],strtoupper($_POST['apellidosup']),strtoupper($_POST['nombresup']),$_POST['passwordup']);
+                $responsablecontrolador -> actualizar($_POST['idupdate'],$_POST['dniup'],strtoupper($_POST['apellidosup']),strtoupper($_POST['nombresup']),$_POST['passwordup']);
                 $_POST = array();
                 header("location: responsableview.php");
             }else{
-                $responsablecontroller -> guardar($_POST['dni'],strtoupper($_POST['apellidos']),strtoupper($_POST['nombres']),$_POST['password']);
+                $responsablecontrolador -> guardar($_POST['dni'],strtoupper($_POST['apellidos']),strtoupper($_POST['nombres']),$_POST['password']);
                 $_POST = array();
                 header("location: responsableview.php");
             }
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $responsables = $responsablecontroller -> mostrar();
+                    $responsables = $responsablecontrolador -> mostrar();
                     foreach ($responsables as $responsable) {
                     echo "<tr><td class='text-center'>".$responsable["IdResponsable"]."</td><td class='text-center'>".$responsable["Dni"]."</td>
                     <td class='text-center'>".$responsable["Apellidos"]."</td><td class='text-center'>".$responsable["Nombres"]."</td>

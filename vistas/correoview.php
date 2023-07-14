@@ -13,11 +13,11 @@
         <?php 
         include_once($_SERVER["DOCUMENT_ROOT"] . "/helpers/cabecera.php");
         include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/CorreoController.php");
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/CorreoController.php");
-        $correocontroller = new CorreoController();
-        $responsablecontroller = new ResponsableController();
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/ResponsableController.php");
+        $correocontrolador = new correocontroller();
+        $responsablecontrolador = new responsablecontroller();
         if($_SERVER["REQUEST_METHOD"] == "POST") {            
-            $correocontroller -> enviarCorreo($_SESSION["id"],$_POST['idresponsable'],$_POST['asunto'],$_POST['mensaje']);
+            $correocontrolador -> enviarCorreo($_SESSION["id"],$_POST['idresponsable'],$_POST['asunto'],$_POST['mensaje']);
             echo $_SESSION["id"],$_POST['idresponsable'],$_POST['asunto'],$_POST['mensaje'];
             $_POST = array();
             header("location: correoview.php");
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $correos = $correocontroller -> mostrarRecibidos($_SESSION["id"]);
+                    $correos = $correocontrolador -> mostrarRecibidos($_SESSION["id"]);
                     foreach ($correos as $correo) {
                     echo "<tr><td class='text-center'>".$correo["IdCorreo"]."</td><td class='text-center'>".$correo["ApellidosRemitente"]." ".$correo["NombresRemitente"]."</td><td class='text-center'>".$correo["Asunto"]."</td>
                     <td class='text-center'>".$correo["Fecha"]."</td><td class='text-center'><button data-bs-toggle='modal' data-bs-target='#infoMensaje' class='btn btn-success btn-sm' onclick='ver(\"".$correo["ApellidosRemitente"]." ".$correo["NombresRemitente"]."\",\"".$correo["Asunto"]."\",\"".$correo["Cuerpo"]."\",\"".$correo["Fecha"]."\")'><i class='fa fa-eye fa-lg' aria-hidden='true'></i> </button></td></tr>";
@@ -73,7 +73,7 @@
                     <select name="idresponsable" id="idresponsable" required class="form-select" aria-label="idresponsable">
                         <option value="">SELECCIONE DESTINATARIO</option>
                         <?php
-                        $responsables = $responsablecontroller -> mostrarDiferente($_SESSION["id"]);
+                        $responsables = $responsablecontrolador -> mostrarDiferente($_SESSION["id"]);
                         foreach ($responsables as $responsable) {
                             echo "<option value='".$responsable['IdResponsable']."' class='fw-bold'>".$responsable['Apellidos']." ".$responsable['Nombres']."</option>";
                         }

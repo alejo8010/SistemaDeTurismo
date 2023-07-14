@@ -1,30 +1,30 @@
 <?php
    include("controladores/ValidarLogin.php");
-   session_start();
    $error = false;
    if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if($_POST['checkopcion']){
+    $resultado = NULL;
+    $esResponsable = false;
+    if(isset($_POST['checkopcion'])){
         $resultado = LoginResponsable($_POST['dni'],$_POST['password']);
+        $esResponsable=true;
     }else{
         $resultado = LoginUsuario($_POST['dni'],$_POST['password']);
     }
 
-    
-    if($resultado) {
-        print_r($resultado);
-        $_SESSION['id'] = $_POST['checkopcion']?$resultado["IdResponsable"]:$resultado['IdUsuario'];
+    if($resultado!=NULL) {
+        session_start();
+        $_SESSION['id'] = $esResponsable?$resultado["IdResponsable"]:$resultado['IdUsuario'];
         $_SESSION['usuario'] = $resultado["Apellidos"]." ".$resultado["Nombres"];
         $_SESSION['dni'] = $resultado["Dni"];
-        $_SESSION['responsable'] = $_POST['checkopcion']?1:0;
-        if($_POST['checkopcion']){
-            header("location: vistas/capacitacionesview.php");
+        $_SESSION['responsable'] = $esResponsable;
+        var_dump($_SESSION);
+        
+        if($esResponsable){
+            header("location: ./vistas/capatacionesview.php");
         }else{
-            header("location: vistas/destinosview.php");
+            header("location: ./vistas/destinosview.php");
         }
-       
-       
-        $_POST = array();
      }else {
         $error = true;
      }

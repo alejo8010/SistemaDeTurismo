@@ -1,6 +1,6 @@
 <?php
        include_once("../clase/Conn.php");
-    class Establecimiento{
+    class establecimiento{
         private $idestablecimientoTuristico;
         private $nombreestablecimiento;
         private $distrito;

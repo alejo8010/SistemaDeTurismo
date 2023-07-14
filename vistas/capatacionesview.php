@@ -11,14 +11,14 @@
     <div class="container-fluid">
         <?php 
         include_once($_SERVER["DOCUMENT_ROOT"] . "/helpers/cabecera.php");
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/CapacitacionController.php");
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/EstablecimientoController.php");
-        $capacitacioncontroller = new CapacitacionController();
-        $establecimientocontroller = new EstablecimientoController();
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/capacitacioncontroller.php");
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/establecimientocontroller.php");
+        $capacitacioncontrolador = new capacitacioncontroller();
+        $establecimientocontrolador = new establecimientocontroller();
         if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $capacitacioncontroller -> guardar($_POST['idestablecimiento'],strtoupper($_POST['nombre']),strtoupper($_POST['fecha']));
+            $capacitacioncontrolador -> guardar($_POST['idestablecimiento'],strtoupper($_POST['nombre']),strtoupper($_POST['fecha']));
             $_POST = array();
-            header("location: capacitacionesview.php");
+            header("location: ./capacitacionesview.php");
         }
         ?>
         <div class="row mt-3">
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $capacitaciones = $capacitacioncontroller -> mostrar($_SESSION["id"]);
+                    $capacitaciones = $capacitacioncontrolador -> mostrar($_SESSION["id"]);
                     foreach ($capacitaciones as $capacitacion) {
                     echo "<tr><td class='text-center'>".$capacitacion["IdCapacitacion"]."</td><td class='text-center'>".$capacitacion["NombreCapacitacion"]."</td><td class='text-center'>".$capacitacion["NombreEstablecimiento"]."</td>
                     <td class='text-center'>".$capacitacion["Fecha"]."</td></tr>";
@@ -74,7 +74,7 @@
                     <select name="idestablecimiento" id="idestablecimiento" required class="form-select" aria-label="idestablecimiento">
                         <option value="">SELECCIONE ESTABLECIMIENTO ASIGNADO</option>
                         <?php
-                        $establecimientos = $establecimientocontroller -> mostrarResponsable($_SESSION["id"]);
+                        $establecimientos = $establecimientocontrolador -> mostrarResponsable($_SESSION["id"]);
                         foreach ($establecimientos as $establecimiento) {
                             echo "<option value='".$establecimiento['IdEstablecimiento']."' class='fw-bold'>".$establecimiento['NombreEstablecimiento']." - ".$establecimiento['NombreDestino']."</option>";
                         }

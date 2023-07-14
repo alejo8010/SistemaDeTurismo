@@ -15,10 +15,10 @@
             echo "<div class='alert alert-danger mt-2' role='alert'>No tiene acceso a este modulo</div>";
             exit();
         }
-        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/DestinoController.php");
-        $destinocontroller = new DestinoController();
+        include_once($_SERVER["DOCUMENT_ROOT"] . "/controladores/destinocontroller.php");
+        $destinocontrolador = new destinocontroller();
         if($_SERVER["REQUEST_METHOD"] == "POST") {            
-            $destinocontroller -> guardar(strtoupper($_POST['nombre']),strtoupper($_POST['departamento']),strtoupper($_POST['provincia']),strtoupper($_POST['distrito']));
+            $destinocontrolador -> guardar(strtoupper($_POST['nombre']),strtoupper($_POST['departamento']),strtoupper($_POST['provincia']),strtoupper($_POST['distrito']));
             $_POST = array();
             header("location: destinosview.php");
         }
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $destinos = $destinocontroller -> mostrar();
+                    $destinos = $destinocontrolador -> mostrar();
                     foreach ($destinos as $destino) {
                     echo "<tr><td class='text-center'>".$destino["IdDestinoTuristico"]."</td><td class='text-center'>".$destino["NombreDestino"]."</td><td class='text-center'>".$destino["Departamento"]."</td>
                     <td class='text-center'>".$destino["Provincia"]."</td><td class='text-center'>".$destino["Distrito"]."</td></tr>";
